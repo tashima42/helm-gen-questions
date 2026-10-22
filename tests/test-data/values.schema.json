@@ -203,15 +203,16 @@
   "properties": {
     "coco": {
       "additionalProperties": false,
-      "description": "coco -- Confidential computing attestation component configuration",
+      "description": "Confidential computing attestation component configuration",
       "properties": {
         "affinity": {
           "$ref": "#/definitions/affinityConfig",
+          "description": "Advanced scheduling rules.",
           "required": []
         },
         "image": {
           "default": "null",
-          "description": "\ncoco.image -- Image for the confidential computing containers, overwriting the one computed with the `repository` value",
+          "description": "Image for the confidential computing containers, overwriting the one computed with the `repository` value",
           "required": [],
           "title": "image",
           "type": [
@@ -221,7 +222,7 @@
         },
         "nodeName": {
           "default": "",
-          "description": "coco.nodeName -- Specific node assignment.",
+          "description": "Specific node assignment.",
           "required": [],
           "title": "nodeName",
           "type": [
@@ -231,16 +232,16 @@
         },
         "nodeSelector": {
           "$ref": "#/definitions/nodeSelectorMap",
+          "description": "Node label matching rules.",
           "required": []
         },
         "replicas": {
           "default": 0,
-          "description": "coco.replicas -- Number the confidential computing pods replicas",
+          "description": "Number the confidential computing pods replicas",
           "minimum": 0,
           "title": "replicas",
           "type": "integer",
           "x-rancher-question": {
-            "description": "Number of replicas for the confidential computing attestation deployment. 0 disables it.",
             "group": "Components",
             "label": "Confidential Computing Attestation Replicas",
             "min": 0,
@@ -249,7 +250,7 @@
         },
         "tag": {
           "default": "null",
-          "description": "\ncoco.tag -- Image tag for the confidential computing containers, overwriting the global one",
+          "description": "Image tag for the confidential computing containers, overwriting the global one",
           "required": [],
           "title": "tag",
           "type": [
@@ -259,28 +260,28 @@
         },
         "tolerations": {
           "$ref": "#/definitions/tolerationsList",
+          "description": "Node taint tolerations.",
           "required": []
         }
       },
       "required": [],
-      "title": "coco",
-      "type": "object"
+      "title": "coco"
     },
     "db": {
       "additionalProperties": false,
-      "description": "db -- PostgreSQL database configuration",
+      "description": "PostgreSQL database configuration",
       "properties": {
         "affinity": {
           "$ref": "#/definitions/affinityConfig",
+          "description": "Advanced scheduling rules.",
           "required": []
         },
         "enable": {
           "default": true,
-          "description": "db.enable -- Deploys the internal dababase if set to true. Setting to false is not supported yet.",
+          "description": "Deploys the internal dababase if set to true. Setting to false is not supported yet.",
           "title": "enable",
           "type": "boolean",
           "x-rancher-question": {
-            "description": "Deploy the internal PostgreSQL instance. WARNING: setting this to false is not supported yet.",
             "group": "Database",
             "label": "Deploy PostgreSQL",
             "order": 600,
@@ -289,7 +290,7 @@
         },
         "image": {
           "default": "null",
-          "description": "\ndb.image -- Image for the database container, overwriting the one computed with the `repository` value",
+          "description": "Image for the database container, overwriting the one computed with the `repository` value",
           "required": [],
           "title": "image",
           "type": [
@@ -299,11 +300,12 @@
         },
         "internal": {
           "$ref": "#/definitions/dbConnectionConfig",
+          "description": "Configuration of the internal database connection",
           "required": []
         },
         "nodeName": {
           "default": "",
-          "description": "db.nodeName -- Specific node assignment.",
+          "description": "Specific node assignment.",
           "required": [],
           "title": "nodeName",
           "type": [
@@ -313,15 +315,15 @@
         },
         "nodeSelector": {
           "$ref": "#/definitions/nodeSelectorMap",
+          "description": "Node label matching rules.",
           "required": []
         },
         "podsCIDR": {
           "default": "10.42.0.0/16",
-          "description": "db.podsCIDR -- Network IP range to allow plain text connections from, usually the cluster pods CIDR\nThe default has been adjusted with rke2's pods CIDR default.",
+          "description": "Network IP range to allow plain text connections from, usually the cluster pods CIDR The default has been adjusted with rke2's pods CIDR default.",
           "required": [],
           "title": "podsCIDR",
           "x-rancher-question": {
-            "description": "Network IP range allowed to make plain text connections to the database, usually the cluster pods CIDR. The default matches rke2's pods CIDR; K3s also uses 10.42.0.0/16.",
             "label": "Pods CIDR",
             "order": 610,
             "subquestion_of": "db.enable"
@@ -329,11 +331,12 @@
         },
         "report": {
           "$ref": "#/definitions/dbConnectionConfig",
+          "description": "Configuration of the report database connection",
           "required": []
         },
         "tag": {
           "default": "null",
-          "description": "\ndb.tag -- Image tag for the database container, overwriting the global one",
+          "description": "Image tag for the database container, overwriting the global one",
           "required": [],
           "title": "tag",
           "type": [
@@ -343,16 +346,16 @@
         },
         "tolerations": {
           "$ref": "#/definitions/tolerationsList",
+          "description": "Node taint tolerations.",
           "required": []
         }
       },
       "required": [],
-      "title": "db",
-      "type": "object"
+      "title": "db"
     },
     "enableMonitoring": {
       "default": true,
-      "description": "enableMonitoring -- Create the ingress or gateway routes for Prometheus exporters if true.",
+      "description": "Create the ingress or gateway routes for Prometheus exporters if true.",
       "title": "enableMonitoring",
       "type": "boolean",
       "x-rancher-question": {
@@ -363,7 +366,7 @@
     },
     "exposeJavaDebug": {
       "default": false,
-      "description": "exposeJavaDebug -- Expose ports 8001, 8002, and 8003 for Java debugging if true",
+      "description": "Expose ports 8001, 8002, and 8003 for Java debugging if true",
       "title": "exposeJavaDebug",
       "type": "boolean",
       "x-rancher-question": {
@@ -374,11 +377,11 @@
     },
     "gateway": {
       "additionalProperties": false,
-      "description": "gateway -- Configures the Gateway API.",
+      "description": "Configures the Gateway API.",
       "properties": {
         "class": {
           "default": "",
-          "description": "gateway.class -- Name of the gateway class to use. For rke2 with traefik, it is likely to be \"traefik\".",
+          "description": "Name of the gateway class to use. For rke2 with traefik, it is likely to be \"traefik\".",
           "required": [],
           "title": "class",
           "x-rancher-question": {
@@ -389,7 +392,7 @@
         },
         "enable": {
           "default": false,
-          "description": "gateway.enable -- If enabled, Gateway API 1.4 resources will be deployed instead of the ingress ones.\nNote that TCPRoute is used and is still in alpha2 stage.",
+          "description": "If enabled, Gateway API 1.4 resources will be deployed instead of the ingress ones. Note that TCPRoute is used and is still in alpha2 stage.",
           "title": "enable",
           "type": "boolean",
           "x-rancher-question": {
@@ -401,24 +404,25 @@
         },
         "listeners": {
           "additionalProperties": false,
-          "description": "gateway.listeners -- Gateway listeners configuration",
+          "description": "Gateway listeners configuration",
           "properties": {
             "http": {
               "$ref": "#/definitions/listener",
+              "description": "Configuration of the HTTP listener. The default is adjusted for traefik on rke2",
               "required": []
             },
             "https": {
               "$ref": "#/definitions/listener",
+              "description": "Configuration of the HTTPS listener. The default is adjusted for traefik on rke2",
               "required": []
             }
           },
           "required": [],
-          "title": "listeners",
-          "type": "object"
+          "title": "listeners"
         },
         "name": {
           "default": "",
-          "description": "gateway.name -- Name of the Gateway to use. If left empty an uyuni-gateway will be created.",
+          "description": "Name of the Gateway to use. If left empty an uyuni-gateway will be created.",
           "required": [],
           "title": "name",
           "x-rancher-question": {
@@ -428,27 +432,22 @@
           }
         }
       },
-      "required": [
-        "listeners"
-      ],
-      "title": "gateway",
-      "type": "object"
+      "required": [],
+      "title": "gateway"
     },
     "global": {
       "additionalProperties": false,
-      "description": "global -- Variables that can be shared with a parent chart",
+      "description": "Variables that can be shared with a parent chart",
       "properties": {
         "fqdn": {
           "default": "null",
-          "description": "\nglobal.fqdn -- Fully qualified name the server will answer as.",
+          "description": "Fully qualified name the server will answer as.",
           "required": [],
           "title": "fqdn",
           "x-rancher-question": {
-            "description": "Fully qualified domain name the server will answer as, e.g. uyuni.example.com. Changing this value later renames the server, handle with care.",
             "group": "General",
             "label": "Server FQDN",
             "order": 100,
-            "required": true,
             "type": "string"
           }
         }
@@ -460,15 +459,16 @@
     },
     "hubAPI": {
       "additionalProperties": false,
-      "description": "hubAPI -- hub API component configuration",
+      "description": "hub API component configuration",
       "properties": {
         "affinity": {
           "$ref": "#/definitions/affinityConfig",
+          "description": "Advanced scheduling rules.",
           "required": []
         },
         "enable": {
           "default": false,
-          "description": "hubAPI.enable -- Define a hub API deployment with one replica if set to true.",
+          "description": "Define a hub API deployment with one replica if set to true.",
           "title": "enable",
           "type": "boolean",
           "x-rancher-question": {
@@ -479,7 +479,7 @@
         },
         "image": {
           "default": "null",
-          "description": "\nhubAPI.image -- Image for the hub API container, overwriting the one computed with the `repository` value",
+          "description": "Image for the hub API container, overwriting the one computed with the `repository` value",
           "required": [],
           "title": "image",
           "type": [
@@ -489,7 +489,7 @@
         },
         "nodeName": {
           "default": "",
-          "description": "hubAPI.nodeName -- Specific node assignment.",
+          "description": "Specific node assignment.",
           "required": [],
           "title": "nodeName",
           "type": [
@@ -499,11 +499,12 @@
         },
         "nodeSelector": {
           "$ref": "#/definitions/nodeSelectorMap",
+          "description": "Node label matching rules.",
           "required": []
         },
         "tag": {
           "default": "null",
-          "description": "\nhubAPI.tag -- Image tag for the hub API container, overwriting the global one",
+          "description": "Image tag for the hub API container, overwriting the global one",
           "required": [],
           "title": "tag",
           "type": [
@@ -513,57 +514,61 @@
         },
         "tolerations": {
           "$ref": "#/definitions/tolerationsList",
+          "description": "Node taint tolerations.",
           "required": []
         }
       },
       "required": [],
-      "title": "hubAPI",
-      "type": "object"
+      "title": "hubAPI"
     },
     "ingress": {
       "additionalProperties": false,
-      "description": "ingress -- Configuration of the ingress rules. Won't be used if gateway is enabled.",
+      "description": "Configuration of the ingress rules. Won't be used if gateway is enabled.",
       "properties": {
         "annotations": {
           "additionalProperties": false,
-          "description": "ingress.annotations -- Custom annotations for ingress rules.",
+          "description": "Custom annotations for ingress rules.",
           "properties": {
             "exporters": {
               "$ref": "#/definitions/annotationsMap",
+              "description": "annotations for the exporters-ingress-ssl ingress definition.",
               "required": []
             },
             "hub": {
               "$ref": "#/definitions/annotationsMap",
+              "description": "annotations for the hubapi-ingress-ssl ingress definition.",
               "required": []
             },
             "nossl": {
               "$ref": "#/definitions/annotationsMap",
+              "description": "annotations for the uyuni-ingress-nossl ingress definition.",
               "required": []
             },
             "saline": {
               "$ref": "#/definitions/annotationsMap",
+              "description": "annotations for the saline-ingress-ssl ingress definition.",
               "required": []
             },
             "ssl": {
               "$ref": "#/definitions/annotationsMap",
+              "description": "annotations for the uyuni-ingress-ssl ingress definition.",
               "required": []
             },
             "sslRedirect": {
               "$ref": "#/definitions/annotationsMap",
+              "description": "annotations for the uyuni-ingress-ssl-redirect ingress definition.",
               "required": []
             }
           },
           "required": [],
-          "title": "annotations",
-          "type": "object"
+          "title": "annotations"
         },
         "class": {
           "default": "traefik",
-          "description": "ingress.class -- Specify the ingress class name to use.",
+          "description": "Specify the ingress class name to use.",
           "required": [],
           "title": "class",
           "x-rancher-question": {
-            "description": "Ingress class name to use. Empty means the default one. On rke2 this is likely 'traefik', on K3s it is likely empty.",
             "group": "Ingress",
             "label": "Ingress Class",
             "order": 380,
@@ -572,7 +577,7 @@
         },
         "type": {
           "default": "traefik",
-          "description": "ingress.type -- Ingress that is used in the cluster.\nSet to the empty string to use a custom ingress.",
+          "description": "Ingress that is used in the cluster. Set to the empty string to use a custom ingress.",
           "enum": [
             "traefik",
             ""
@@ -588,19 +593,17 @@
           }
         }
       },
-      "required": [
-        "annotations"
-      ],
-      "title": "ingress",
-      "type": "object"
+      "required": [],
+      "title": "ingress"
     },
     "placement": {
       "$ref": "#/definitions/nodeSelectorConfig",
+      "description": "Default node placement rules for all pods",
       "required": []
     },
     "pullPolicy": {
       "default": "IfNotPresent",
-      "description": "pullPolicy -- Images pull policy. See: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy",
+      "description": "Images pull policy. See: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy",
       "enum": [
         "Always",
         "IfNotPresent",
@@ -616,7 +619,7 @@
     },
     "registrySecret": {
       "default": "",
-      "description": "registrySecret -- name of secret to use to pull the images from the\nregistry with authentication. Leave empty for no authentication.\nTo create the secret, see:\nhttps://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/",
+      "description": "name of secret to use to pull the images from the registry with authentication. Leave empty for no authentication. To create the secret, see: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/",
       "required": [],
       "title": "registrySecret",
       "x-rancher-question": {
@@ -630,31 +633,30 @@
     "repository": {
       "$schema": "https://json-schema.org/draft-07/schema#",
       "default": "registry.opensuse.org/uyuni",
-      "description": "yaml-language-server: $schema=values.schema.json\nrepository -- The default repository with the path where to find all the images.",
+      "description": "The default repository with the path where to find all the images.",
       "required": [],
       "title": "Server values",
       "x-rancher-question": {
         "group": "Images",
         "label": "Image Repository",
-        "order": 200,
-        "required": true
+        "order": 200
       }
     },
     "saline": {
       "additionalProperties": false,
-      "description": "saline -- Saline component configuration",
+      "description": "Saline component configuration",
       "properties": {
         "affinity": {
           "$ref": "#/definitions/affinityConfig",
+          "description": "Advanced scheduling rules.",
           "required": []
         },
         "enable": {
           "default": false,
-          "description": "saline.enable -- Define a saline deployment with one replica if set to true.",
+          "description": "Define a saline deployment with one replica if set to true.",
           "title": "enable",
           "type": "boolean",
           "x-rancher-question": {
-            "description": "Deploy Saline to provide Salt master metrics.",
             "group": "Components",
             "label": "Enable Saline",
             "order": 530
@@ -662,7 +664,7 @@
         },
         "image": {
           "default": "null",
-          "description": "\nsaline.image -- Image for the Saline container, overwriting the one computed with the `repository` value",
+          "description": "Image for the Saline container, overwriting the one computed with the `repository` value",
           "required": [],
           "title": "image",
           "type": [
@@ -672,7 +674,7 @@
         },
         "nodeName": {
           "default": "",
-          "description": "saline.nodeName -- Specific node assignment.",
+          "description": "Specific node assignment.",
           "required": [],
           "title": "nodeName",
           "type": [
@@ -682,11 +684,12 @@
         },
         "nodeSelector": {
           "$ref": "#/definitions/nodeSelectorMap",
+          "description": "Node label matching rules.",
           "required": []
         },
         "tag": {
           "default": "null",
-          "description": "\nsaline.tag -- Image tag for the Saline container, overwriting the global one",
+          "description": "Image tag for the Saline container, overwriting the global one",
           "required": [],
           "title": "tag",
           "type": [
@@ -696,28 +699,28 @@
         },
         "tolerations": {
           "$ref": "#/definitions/tolerationsList",
+          "description": "Node taint tolerations.",
           "required": []
         }
       },
       "required": [],
-      "title": "saline",
-      "type": "object"
+      "title": "saline"
     },
     "server": {
       "additionalProperties": false,
-      "description": "server -- Server component configuration",
+      "description": "Server component configuration",
       "properties": {
         "affinity": {
           "$ref": "#/definitions/affinityConfig",
+          "description": "Advanced scheduling rules.",
           "required": []
         },
         "apparmorProfile": {
           "default": "",
-          "description": "server.apparmorProfile -- Name of an AppArmor profile to use for the server pod.",
+          "description": "Name of an AppArmor profile to use for the server pod.",
           "required": [],
           "title": "apparmorProfile",
           "x-rancher-question": {
-            "description": "Name of an AppArmor profile to use for the server pod. It must show up in aa-status output.",
             "label": "AppArmor Profile",
             "order": 810,
             "subquestion_of": "server.superPrivileged"
@@ -725,7 +728,7 @@
         },
         "email": {
           "default": "admin@uyuni.lab.org",
-          "description": "server.email -- Email used for the notifications sent by the server.",
+          "description": "Email used for the notifications sent by the server.",
           "required": [],
           "title": "email",
           "x-rancher-question": {
@@ -735,7 +738,7 @@
           }
         },
         "extraVolumeMounts": {
-          "description": "server.extraVolumeMounts -- Additional mounts for the server container.",
+          "description": "Additional mounts for the server container.",
           "items": {
             "required": [],
             "type": "object"
@@ -748,7 +751,7 @@
           ]
         },
         "extraVolumes": {
-          "description": "server.extraVolumes -- Additional Kubernetes volumes for the server pod.",
+          "description": "Additional Kubernetes volumes for the server pod.",
           "items": {
             "required": [],
             "type": "object"
@@ -762,7 +765,7 @@
         },
         "image": {
           "default": "null",
-          "description": "\nserver.image -- Overrides the default image computed using the repository property. Leave undefined to use the default",
+          "description": "Overrides the default image computed using the repository property. Leave undefined to use the default",
           "required": [],
           "title": "image",
           "type": [
@@ -772,11 +775,11 @@
         },
         "mirror": {
           "additionalProperties": false,
-          "description": "server.mirror -- Volume or host path to mount in the container as server.susemanager.fromdir value.",
+          "description": "Volume or host path to mount in the container as server.susemanager.fromdir value.",
           "properties": {
             "claimName": {
               "default": "",
-              "description": "server.mirror.claimName -- Name of the PVC to use for the mirror volume.",
+              "description": "Name of the PVC to use for the mirror volume.",
               "required": [],
               "title": "claimName",
               "x-rancher-question": {
@@ -789,11 +792,10 @@
             },
             "hostPath": {
               "default": "",
-              "description": "server.mirror.hostPath -- Path on the node to mount as mirror.",
+              "description": "Path on the node to mount as mirror.",
               "required": [],
               "title": "hostPath",
               "x-rancher-question": {
-                "description": "Path on the node to mount as the server.susemanager.fromdir mirror. Strongly discouraged as it ties the server to a node. Leave empty for none.",
                 "group": "Storage",
                 "label": "Mirror Host Path",
                 "order": 780
@@ -801,12 +803,11 @@
             }
           },
           "required": [],
-          "title": "mirror",
-          "type": "object"
+          "title": "mirror"
         },
         "nodeName": {
           "default": "",
-          "description": "server.nodeName -- Specific node assignment.",
+          "description": "Specific node assignment.",
           "required": [],
           "title": "nodeName",
           "type": [
@@ -816,11 +817,12 @@
         },
         "nodeSelector": {
           "$ref": "#/definitions/nodeSelectorMap",
+          "description": "Node label matching rules.",
           "required": []
         },
         "sccSecret": {
           "default": "",
-          "description": "server.sccSecret -- Name of a basic-auth secret with the organization mirroring credentials to set up on the server.",
+          "description": "Name of a basic-auth secret with the organization mirroring credentials to set up on the server.",
           "required": [],
           "title": "sccSecret",
           "x-rancher-question": {
@@ -833,11 +835,10 @@
         },
         "selinuxType": {
           "default": "",
-          "description": "server.selinuxType -- Name of the SELinux type to use for the server pod.",
+          "description": "Name of the SELinux type to use for the server pod.",
           "required": [],
           "title": "selinuxType",
           "x-rancher-question": {
-            "description": "SELinux type to use for the server pod. Leave empty for the container runtime default.",
             "label": "SELinux Type",
             "order": 820,
             "subquestion_of": "server.superPrivileged"
@@ -845,11 +846,10 @@
         },
         "superPrivileged": {
           "default": false,
-          "description": "server.superPrivileged -- Set to true to run on a cluster with selinux or AppArmor enforced.",
+          "description": "Set to true to run on a cluster with selinux or AppArmor enforced.",
           "title": "superPrivileged",
           "type": "boolean",
           "x-rancher-question": {
-            "description": "May be needed on clusters with SELinux or AppArmor enforced. This is a big security risk.",
             "group": "Advanced",
             "label": "Super Privileged Server",
             "order": 800,
@@ -858,7 +858,7 @@
         },
         "systemdLogLevel": {
           "default": "",
-          "description": "server.systemdLogLevel -- Systemd log level to use for debugging",
+          "description": "Systemd log level to use for debugging",
           "enum": [
             "debug",
             "info",
@@ -873,7 +873,6 @@
           "required": [],
           "title": "systemdLogLevel",
           "x-rancher-question": {
-            "description": "Value passed to the systemd log-level parameter. Empty keeps the default. Setting it adds a tty to the container.",
             "empty_option_label": "Default",
             "group": "Advanced",
             "label": "Systemd Log Level",
@@ -882,7 +881,7 @@
         },
         "tag": {
           "default": "null",
-          "description": "\nserver.tag -- Overrides the default tag in the tag property. Leave undefined to use the default",
+          "description": "Overrides the default tag in the tag property. Leave undefined to use the default",
           "required": [],
           "title": "tag",
           "type": [
@@ -892,22 +891,20 @@
         },
         "tolerations": {
           "$ref": "#/definitions/tolerationsList",
+          "description": "Node taint tolerations.",
           "required": []
         }
       },
-      "required": [
-        "mirror"
-      ],
-      "title": "server",
-      "type": "object"
+      "required": [],
+      "title": "server"
     },
     "services": {
       "additionalProperties": false,
-      "description": "services -- Services tuning properties.",
+      "description": "Services tuning properties.",
       "properties": {
         "annotations": {
           "default": "null",
-          "description": "\nservices.annotations -- annotations to set to all the services. Merged with the service ones.",
+          "description": "annotations to set to all the services. Merged with the service ones.",
           "required": [],
           "title": "annotations",
           "type": [
@@ -917,26 +914,31 @@
         },
         "reportdb": {
           "$ref": "#/definitions/serviceConfig",
+          "description": "Values setting up the reportdb service.",
           "required": []
         },
         "salt": {
           "$ref": "#/definitions/serviceConfig",
+          "description": "Values setting up the salt service.",
           "required": []
         },
         "search": {
           "$ref": "#/definitions/serviceConfig",
+          "description": "Values setting up the search server service.",
           "required": []
         },
         "taskomatic": {
           "$ref": "#/definitions/serviceConfig",
+          "description": "Values setting up the taskomatic service.",
           "required": []
         },
         "tftp": {
           "additionalProperties": false,
-          "description": "services.tftp -- Values setting up the tftp service.",
+          "description": "Values setting up the tftp service.",
           "properties": {
             "annotations": {
               "default": "null",
+              "description": " @schema type: [\"object\", \"null\"] @schema",
               "required": [],
               "title": "annotations",
               "type": [
@@ -954,11 +956,12 @@
         },
         "tomcat": {
           "$ref": "#/definitions/serviceConfig",
+          "description": "Values setting up the tomcat service.",
           "required": []
         },
         "type": {
           "default": "ClusterIP",
-          "description": "services.type -- type of all the externally-facing services. Can be overridden on each service.",
+          "description": "type of all the externally-facing services. Can be overridden on each service.",
           "enum": [
             "ClusterIP",
             "NodePort",
@@ -974,16 +977,14 @@
         }
       },
       "required": [],
-      "title": "services",
-      "type": "object"
+      "title": "services"
     },
     "tag": {
       "default": "",
-      "description": "tag -- The default tag to use for all the images, can be overridden\nBy default the tag will be the appVersion of the Chart.",
+      "description": "The default tag to use for all the images, can be overridden By default the tag will be the appVersion of the Chart.",
       "required": [],
       "title": "tag",
       "x-rancher-question": {
-        "description": "Default tag to use for all images. Leave empty to use the chart appVersion.",
         "group": "Images",
         "label": "Image Tag",
         "order": 210
@@ -991,19 +992,19 @@
     },
     "tftp": {
       "additionalProperties": false,
-      "description": "tftp -- TFTP server configuration",
+      "description": "TFTP server configuration",
       "properties": {
         "affinity": {
           "$ref": "#/definitions/affinityConfig",
+          "description": "Advanced scheduling rules.",
           "required": []
         },
         "enable": {
           "default": false,
-          "description": "tftp.enable -- Define a TFTP server deployment with one replica if set to true",
+          "description": "Define a TFTP server deployment with one replica if set to true",
           "title": "enable",
           "type": "boolean",
           "x-rancher-question": {
-            "description": "Deploy the TFTP server to PXE boot systems.",
             "group": "Components",
             "label": "Enable TFTP Server",
             "order": 500,
@@ -1012,7 +1013,7 @@
         },
         "hostNetwork": {
           "default": false,
-          "description": "tftp.hostNetwork -- Use the host network to bypass the Kubernetes network layers.\nThis may be needed if not using a LoadBalancer for the TFTP server.\nNote that this may be more complex to manage on multi-node clusters.",
+          "description": "Use the host network to bypass the Kubernetes network layers. This may be needed if not using a LoadBalancer for the TFTP server. Note that this may be more complex to manage on multi-node clusters.",
           "title": "hostNetwork",
           "type": "boolean",
           "x-rancher-question": {
@@ -1023,7 +1024,7 @@
         },
         "image": {
           "default": "null",
-          "description": "\ntftp.image -- Image for the TFTP server container, overwriting the one computed with the `repository` value",
+          "description": "Image for the TFTP server container, overwriting the one computed with the `repository` value",
           "required": [],
           "title": "image",
           "type": [
@@ -1033,7 +1034,7 @@
         },
         "nodeName": {
           "default": "",
-          "description": "tftp.nodeName -- Specific node assignment.",
+          "description": "Specific node assignment.",
           "required": [],
           "title": "nodeName",
           "type": [
@@ -1043,11 +1044,12 @@
         },
         "nodeSelector": {
           "$ref": "#/definitions/nodeSelectorMap",
+          "description": "Node label matching rules.",
           "required": []
         },
         "tag": {
           "default": "null",
-          "description": "\ntftp.tag -- Tag for the TFTP server container, overwriting the global one",
+          "description": "Tag for the TFTP server container, overwriting the global one",
           "required": [],
           "title": "tag",
           "type": [
@@ -1057,16 +1059,16 @@
         },
         "tolerations": {
           "$ref": "#/definitions/tolerationsList",
+          "description": "Node taint tolerations.",
           "required": []
         }
       },
       "required": [],
-      "title": "tftp",
-      "type": "object"
+      "title": "tftp"
     },
     "timezone": {
       "default": "Etc/UTC",
-      "description": "timezone -- The time zone to set in the containers",
+      "description": "The time zone to set in the containers",
       "required": [],
       "title": "timezone",
       "x-rancher-question": {
@@ -1077,87 +1079,106 @@
     },
     "volumes": {
       "additionalProperties": false,
-      "description": "volumes -- Configuration of persistent volume claims.",
+      "description": "Configuration of persistent volume claims.",
       "properties": {
         "ca-certs": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "ca-certs volume configuration",
           "required": []
         },
         "etc-apache2": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "etc-apache2 volume configuration",
           "required": []
         },
         "etc-cobbler": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "etc-cobbler volume configuration",
           "required": []
         },
         "etc-postfix": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "etc-postfix volume configuration",
           "required": []
         },
         "etc-rhn": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "etc-rhn volume configuration",
           "required": []
         },
         "etc-salt": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "etc-salt volume configuration",
           "required": []
         },
         "etc-sssd": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "etc-sssd volume configuration",
           "required": []
         },
         "etc-sysconfig": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "etc-sysconfig volume configuration",
           "required": []
         },
         "etc-systemd-multi": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "etc-systemd-multi volume configuration",
           "required": []
         },
         "etc-systemd-sockets": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "etc-systemd-sockets volume configuration",
           "required": []
         },
         "etc-tomcat": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "etc-tomcat volume configuration",
           "required": []
         },
         "run-salt-master": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "run-salt-master volume configuration",
           "required": []
         },
         "srv-formulametadata": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "srv-formulametadata volume configuration",
           "required": []
         },
         "srv-pillar": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "srv-pillar volume configuration",
           "required": []
         },
         "srv-salt": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "srv-salt volume configuration",
           "required": []
         },
         "srv-spacewalk": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "srv-spacewalk volume configuration",
           "required": []
         },
         "srv-susemanager": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "srv-susemanager volume configuration",
           "required": []
         },
         "srv-tftpboot": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "srv-tftpboot volume configuration",
           "required": []
         },
         "srv-www": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "srv-www volume configuration",
           "required": []
         },
         "storageClass": {
           "default": "null",
-          "description": "\nvolumes.storageClass -- Default storage class name to use for all claims.",
+          "description": "Default storage class name to use for all claims.",
           "required": [],
           "title": "storageClass",
           "type": [
@@ -1174,50 +1195,46 @@
         },
         "var-cache": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "var-cache volume configuration",
           "required": []
         },
         "var-cobbler": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "var-cobbler volume configuration",
           "required": []
         },
         "var-log": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "var-log volume configuration",
           "required": []
         },
         "var-pgsql": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "var-pgsql volume configuration",
           "required": []
         },
         "var-salt": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "var-salt volume configuration",
           "required": []
         },
         "var-search": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "var-search volume configuration",
           "required": []
         },
         "var-spacewalk": {
           "$ref": "#/definitions/volumeConfig",
+          "description": "var-spacewalk volume configuration",
           "required": []
         }
       },
       "required": [],
-      "title": "volumes",
-      "type": "object"
+      "title": "volumes"
     }
   },
   "required": [
-    "global",
-    "server",
-    "services",
-    "ingress",
-    "gateway",
-    "tftp",
-    "hubAPI",
-    "coco",
-    "saline",
-    "db",
-    "volumes"
+    "global"
   ],
   "type": "object"
 }
