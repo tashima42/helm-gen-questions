@@ -6,27 +6,28 @@ from `x-rancher-question` annotations in a chart's `values.schema.json`, using `
 The annotations are usually written as `# @schema` comments in `values.yaml` and copied into the schema by the
 [helm-schema](https://github.com/dadav/helm-schema) plugin, so run it first.
 
-## Install
-
-Requires Helm 4. The tarball has no GPG `.prov` file, so Helm can't verify it itself and `--verify=false` is needed. Verify the release with the GitHub attestation first (see below):
-
-```sh
-helm plugin install --verify=false https://github.com/tashima42/helm-gen-questions/releases/download/vX.Y.Z/gen-questions-X.Y.Z.tgz
-```
-
 ### Verify the release
 
 Releases are [immutable](https://docs.github.com/en/code-security/concepts/supply-chain-security/immutable-releases): once published, the tag and the assets can't be changed or replaced, and GitHub attests them. With the [GitHub CLI](https://cli.github.com) (2.81 or newer):
 
 ```sh
+export VERSION=X.Y.Z
 # the release and its tag are the ones GitHub attested
-gh release verify vX.Y.Z --repo tashima42/helm-gen-questions
+gh release verify "v${VERSION}" --repo tashima42/helm-gen-questions
 
 # the downloaded tarball matches the attested asset
-gh release verify-asset vX.Y.Z gen-questions-X.Y.Z.tgz --repo tashima42/helm-gen-questions
+gh release verify-asset "v${VERSION}" "gen-questions-${VERSION}.tgz" --repo tashima42/helm-gen-questions
 ```
 
 Both commands fail if the release was modified or the file doesn't match. The release also has a `checksums.txt` file with the SHA256 of the tarball.
+
+## Install
+
+Requires Helm 4. The tarball has no GPG `.prov` file, so Helm can't verify it itself and `--verify=false` is needed. Verify the release with the GitHub attestation first (see below):
+
+```sh
+helm plugin install --verify=false "https://github.com/tashima42/helm-gen-questions/releases/download/v${VERSION}/gen-questions-${VERSION}.tgz"
+```
 
 To build from source (Go required):
 
@@ -47,7 +48,7 @@ helm gen-questions [flags]
 | `-v`, `--values-file` | `values.yaml` | Chart values file. `values.yml` is used if the default doesn't exist. |
 | `-s`, `--schema-file` | `values.schema.json` | Values JSON schema with the annotations. |
 | `-q`, `--questions-file` | `questions.yml` | File to write, `-` for stdout. |
-| `--header` | generated file notice | Comment added at the top of the questions file. Each line is prefixed with `# `. An empty value adds none. |
+| `--header` | generated file notice | Comment added at the top of the questions file. Each line is prefixed with `#`. An empty value adds none. |
 | `--header-file` | | Read the header comment from a file. Can't be combined with `--header`. |
 
 ```sh
