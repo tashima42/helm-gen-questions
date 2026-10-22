@@ -8,13 +8,25 @@ The annotations are usually written as `# @schema` comments in `values.yaml` and
 
 ## Install
 
-Requires Helm 4. Releases are not signed, so verification is disabled:
+Requires Helm 4. The tarball has no GPG `.prov` file, so Helm can't verify it itself and `--verify=false` is needed. Verify the release with the GitHub attestation first (see below):
 
 ```sh
 helm plugin install --verify=false https://github.com/tashima42/helm-gen-questions/releases/download/vX.Y.Z/gen-questions-X.Y.Z.tgz
 ```
 
-The release has a `checksums.txt` file with the SHA256 of the tarball.
+### Verify the release
+
+Releases are [immutable](https://docs.github.com/en/code-security/concepts/supply-chain-security/immutable-releases): once published, the tag and the assets can't be changed or replaced, and GitHub attests them. With the [GitHub CLI](https://cli.github.com) (2.81 or newer):
+
+```sh
+# the release and its tag are the ones GitHub attested
+gh release verify vX.Y.Z --repo tashima42/helm-gen-questions
+
+# the downloaded tarball matches the attested asset
+gh release verify-asset vX.Y.Z gen-questions-X.Y.Z.tgz --repo tashima42/helm-gen-questions
+```
+
+Both commands fail if the release was modified or the file doesn't match. The release also has a `checksums.txt` file with the SHA256 of the tarball.
 
 To build from source (Go required):
 
