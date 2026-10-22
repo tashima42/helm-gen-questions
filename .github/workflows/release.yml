@@ -1,0 +1,54 @@
+name: Release
+
+# Pushing a vX.Y.Z tag builds the binaries for all the platforms, packages them as a
+# Helm plugin and publishes a GitHub release with the tarball and its checksum.
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    container: ghcr.io/rancher/ci-image/charts
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.5.0
+        with:
+          go-version-file: go.mod
+
+      - name: Set the plugin version from the tag
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          version="${TAG#v}"
+          sed -i "s/^version: \".*\"/version: \"${version}\"/" plugin.yaml
+          grep -q "^version: \"${version}\"$" plugin.yaml
+          echo "VERSION=${version}" >> "$GITHUB_ENV"
+
+      - run: go test ./...
+
+      - run: make build-all
+
+      - name: Package the plugin
+        run: |
+          mkdir -p dist/stage
+          cp -r plugin.yaml LICENSE README.md bin dist/stage/
+          helm plugin package dist/stage --sign=false --destination dist
+          (cd dist && sha256sum "gen-questions-${VERSION}.tgz" > checksums.txt)
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "${TAG}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --title "${TAG}" \
+            --generate-notes \
+            "dist/gen-questions-${VERSION}.tgz" \
+            dist/checksums.txt
