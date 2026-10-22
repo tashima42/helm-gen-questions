@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/tashima42/helm-gen-questions/genquestions"
+	"github.com/tashima42/helm-questions/genquestions"
 )
 
 // version is set at build time.
@@ -23,7 +23,7 @@ var (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "helm gen-questions",
+	Use:   "helm questions",
 	Short: "Generate the Rancher's native chart questions.yml file",
 	Long: `Generate the Rancher's native chart questions.yml file based on the
 x-rancher-question annotations in values.schema.json.
@@ -40,10 +40,10 @@ Annotation fields (an object, or a list of objects):
                       override the values inferred from the schema and values.yaml
   empty_option_label  label of the "" enum option, "None" by default
 Any other field is copied as is (required, min, max, show_if, show_subquestion_if...)`,
-	Example: `  helm gen-questions
-  helm gen-questions -s charts/app/values.schema.json -v charts/app/values.yaml -q charts/app/questions.yml
-  helm gen-questions --header-file HEADER.txt
-  helm gen-questions -q - --header ""`,
+	Example: `  helm questions
+  helm questions -s charts/app/values.schema.json -v charts/app/values.yaml -q charts/app/questions.yml
+  helm questions --header-file HEADER.txt
+  helm questions -q - --header ""`,
 	Version:       version,
 	SilenceUsage:  true,
 	SilenceErrors: true,

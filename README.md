@@ -1,4 +1,4 @@
-# helm-gen-questions
+# helm-questions
 
 A Helm plugin that generates the [Rancher chart `questions.yml`](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/helm-charts-in-rancher/create-apps#question-variable-reference)
 from `x-rancher-question` annotations in a chart's `values.schema.json`, using `values.yaml` for the defaults and types.
@@ -13,10 +13,11 @@ Releases are [immutable](https://docs.github.com/en/code-security/concepts/suppl
 ```sh
 export VERSION=X.Y.Z
 # the release and its tag are the ones GitHub attested
-gh release verify "v${VERSION}" --repo tashima42/helm-gen-questions
+gh release verify "v${VERSION}" --repo tashima42/helm-questions
 
+curl -fsSL "https://github.com/tashima42/helm-questions/releases/download/v${VERSION}/questions-${VERSION}.tgz" -O
 # the downloaded tarball matches the attested asset
-gh release verify-asset "v${VERSION}" "gen-questions-${VERSION}.tgz" --repo tashima42/helm-gen-questions
+gh release verify-asset "v${VERSION}" "questions-${VERSION}.tgz" --repo tashima42/helm-questions
 ```
 
 Both commands fail if the release was modified or the file doesn't match. The release also has a `checksums.txt` file with the SHA256 of the tarball.
@@ -26,13 +27,13 @@ Both commands fail if the release was modified or the file doesn't match. The re
 Requires Helm 4. The tarball has no GPG `.prov` file, so Helm can't verify it itself and `--verify=false` is needed. Verify the release with the GitHub attestation first (see below):
 
 ```sh
-helm plugin install --verify=false "https://github.com/tashima42/helm-gen-questions/releases/download/v${VERSION}/gen-questions-${VERSION}.tgz"
+helm plugin install --verify=false "https://github.com/tashima42/helm-questions/releases/download/v${VERSION}/questions-${VERSION}.tgz"
 ```
 
 To build from source (Go required):
 
 ```sh
-git clone https://github.com/tashima42/helm-gen-questions && cd helm-gen-questions
+git clone https://github.com/tashima42/helm-questions && cd helm-questions
 make build
 helm plugin install .
 ```
@@ -40,7 +41,7 @@ helm plugin install .
 ## Usage
 
 ```sh
-helm gen-questions [flags]
+helm questions [flags]
 ```
 
 | Flag | Default | Description |
@@ -52,9 +53,9 @@ helm gen-questions [flags]
 | `--header-file` | | Read the header comment from a file. Can't be combined with `--header`. |
 
 ```sh
-helm gen-questions -s charts/app/values.schema.json -v charts/app/values.yaml -q charts/app/questions.yml
-helm gen-questions --header-file HEADER.txt
-helm gen-questions -q - --header ""
+helm questions -s charts/app/values.schema.json -v charts/app/values.yaml -q charts/app/questions.yml
+helm questions --header-file HEADER.txt
+helm questions -q - --header ""
 ```
 
 ## Annotations

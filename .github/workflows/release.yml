@@ -10,6 +10,9 @@ on:
 permissions:
   contents: write
 
+env:
+  VERSION: ${{ github.ref_name }}
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -20,27 +23,10 @@ jobs:
       - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.5.0
         with:
           go-version-file: go.mod
-
-      - name: Set the plugin version from the tag
-        env:
-          TAG: ${{ github.ref_name }}
-        run: |
-          version="${TAG#v}"
-          sed -i "s/^version: \".*\"/version: \"${version}\"/" plugin.yaml
-          grep -q "^version: \"${version}\"$" plugin.yaml
-          echo "VERSION=${version}" >> "$GITHUB_ENV"
-
-      - run: go test ./...
-
-      - run: make build-all
-
-      - name: Package the plugin
-        run: |
-          mkdir -p dist/stage
-          cp -r plugin.yaml LICENSE README.md bin dist/stage/
-          helm plugin package dist/stage --sign=false --destination dist
-          (cd dist && sha256sum "gen-questions-${VERSION}.tgz" > checksums.txt)
-
+      - name: Test
+        run: make test
+      - name: package
+        run: make package
       - name: Publish the release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -50,5 +36,5 @@ jobs:
             --repo "${GITHUB_REPOSITORY}" \
             --title "${TAG}" \
             --generate-notes \
-            "dist/gen-questions-${VERSION}.tgz" \
+            "dist/questions-${VERSION}.tgz" \
             dist/checksums.txt

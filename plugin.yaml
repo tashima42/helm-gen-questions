@@ -1,29 +1,29 @@
 apiVersion: v1
 type: cli/v1
-name: "gen-questions"
-version: "0.1.0"
+name: "questions"
+version: "0.0.0+snapshot-4f15396"
 runtime: subprocess
 config:
-  usage: gen-questions [flags]
+  usage: questions [flags]
   shortHelp: Generate the Rancher's native chart questions.yml file.
   longHelp: Generate the Rancher's native chart questions.yml file based on the x-rancher-question annotations on values.schema.json.
 runtimeConfig:
   platformCommand:
     - os: linux
       arch: amd64
-      command: ${HELM_PLUGIN_DIR}/bin/helm-gen-questions_linux_amd64
+      command: ${HELM_PLUGIN_DIR}/bin/helm-questions_linux_amd64
     - os: linux
       arch: arm64
-      command: ${HELM_PLUGIN_DIR}/bin/helm-gen-questions_linux_arm64
+      command: ${HELM_PLUGIN_DIR}/bin/helm-questions_linux_arm64
     - os: darwin
       arch: amd64
-      command: ${HELM_PLUGIN_DIR}/bin/helm-gen-questions_darwin_amd64
+      command: ${HELM_PLUGIN_DIR}/bin/helm-questions_darwin_amd64
     - os: darwin
       arch: arm64
-      command: ${HELM_PLUGIN_DIR}/bin/helm-gen-questions_darwin_arm64
+      command: ${HELM_PLUGIN_DIR}/bin/helm-questions_darwin_arm64
     - os: windows
       arch: amd64
-      command: ${HELM_PLUGIN_DIR}/bin/helm-gen-questions_windows_amd64.exe
+      command: ${HELM_PLUGIN_DIR}/bin/helm-questions_windows_amd64.exe
     - os: windows
       arch: arm64
-      command: ${HELM_PLUGIN_DIR}/bin/helm-gen-questions_windows_arm64.exe
+      command: ${HELM_PLUGIN_DIR}/bin/helm-questions_windows_arm64.exe

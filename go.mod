@@ -1,4 +1,4 @@
-module github.com/tashima42/helm-gen-questions
+module github.com/tashima42/helm-questions
 
 go 1.27.1
 
