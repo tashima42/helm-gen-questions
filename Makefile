@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: SUSE LLC
+#
+# SPDX-License-Identifier: Apache-2.0
+
 # The plugin version, helm names the package after it.
 VERSION ?= 0.0.0+snapshot-$(git rev-parse --short HEAD)
 LDFLAGS := -s -w -X github.com/tashima42/helm-questions/cmd.version=$(VERSION)

@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: SUSE LLC
 //
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 // Package genquestions parses helm files and generates the questions files based on it
 package genquestions

@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: SUSE LLC
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # helm-questions
 
 A Helm plugin that generates the [Rancher chart `questions.yml`](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/helm-charts-in-rancher/create-apps#question-variable-reference)

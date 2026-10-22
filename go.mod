@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: SUSE LLC
 //
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 module github.com/tashima42/helm-questions
 

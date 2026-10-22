@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: SUSE LLC
+#
+# SPDX-License-Identifier: Apache-2.0
+
 name: Release
 
 # Pushing a vX.Y.Z tag builds the binaries for all the platforms, packages them as a

@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: SUSE LLC
+# SPDX-License-Identifier: Apache-2.0
+
+version = 1
+
+# Files that can't carry a comment header: JSON has no comments, go.sum is
+# generated, and questions.yml is compared byte for byte with the generator output.
+[[annotations]]
+path = ["go.sum", "tests/test-data/*"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "SUSE LLC"
+SPDX-License-Identifier = "Apache-2.0"
