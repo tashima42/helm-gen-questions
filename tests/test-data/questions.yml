@@ -3,19 +3,18 @@
 questions:
   - variable: global.fqdn
     label: Server FQDN
-    description: Fully qualified domain name the server will answer as, e.g. uyuni.example.com. Changing this value later renames the server, handle with care.
+    description: Fully qualified name the server will answer as.
     type: string
     group: General
-    required: true
   - variable: server.email
     label: Notification Email
-    description: server.email -- Email used for the notifications sent by the server.
+    description: Email used for the notifications sent by the server.
     type: string
     default: admin@uyuni.lab.org
     group: General
   - variable: timezone
     label: Time Zone
-    description: timezone -- The time zone to set in the containers
+    description: The time zone to set in the containers
     type: string
     default: Etc/UTC
     group: General
@@ -27,21 +26,18 @@ questions:
     group: General
   - variable: repository
     label: Image Repository
-    description: |-
-      yaml-language-server: $schema=values.schema.json
-      repository -- The default repository with the path where to find all the images.
+    description: The default repository with the path where to find all the images.
     type: string
     default: registry.opensuse.org/uyuni
     group: Images
-    required: true
   - variable: tag
     label: Image Tag
-    description: Default tag to use for all images. Leave empty to use the chart appVersion.
+    description: The default tag to use for all the images, can be overridden By default the tag will be the appVersion of the Chart.
     type: string
     group: Images
   - variable: pullPolicy
     label: Image Pull Policy
-    description: 'pullPolicy -- Images pull policy. See: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy'
+    description: 'Images pull policy. See: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy'
     type: enum
     default: IfNotPresent
     options:
@@ -57,9 +53,7 @@ questions:
     group: Images
   - variable: gateway.enable
     label: Use Gateway API
-    description: |-
-      gateway.enable -- If enabled, Gateway API 1.4 resources will be deployed instead of the ingress ones.
-      Note that TCPRoute is used and is still in alpha2 stage.
+    description: If enabled, Gateway API 1.4 resources will be deployed instead of the ingress ones. Note that TCPRoute is used and is still in alpha2 stage.
     type: boolean
     default: false
     group: Ingress
@@ -67,19 +61,17 @@ questions:
     subquestions:
       - variable: gateway.class
         label: Gateway Class
-        description: gateway.class -- Name of the gateway class to use. For rke2 with traefik, it is likely to be "traefik".
+        description: Name of the gateway class to use. For rke2 with traefik, it is likely to be "traefik".
         type: string
         default: ""
       - variable: gateway.name
         label: Gateway Name
-        description: gateway.name -- Name of the Gateway to use. If left empty an uyuni-gateway will be created.
+        description: Name of the Gateway to use. If left empty an uyuni-gateway will be created.
         type: string
         default: ""
   - variable: ingress.type
     label: Ingress Type
-    description: |-
-      ingress.type -- Ingress that is used in the cluster.
-      Set to the empty string to use a custom ingress.
+    description: Ingress that is used in the cluster. Set to the empty string to use a custom ingress.
     type: enum
     default: traefik
     options:
@@ -89,20 +81,20 @@ questions:
     show_if: gateway.enable=false
   - variable: ingress.class
     label: Ingress Class
-    description: Ingress class name to use. Empty means the default one. On rke2 this is likely 'traefik', on K3s it is likely empty.
+    description: Specify the ingress class name to use.
     type: string
     default: traefik
     group: Ingress
     show_if: gateway.enable=false
   - variable: enableMonitoring
     label: Expose Monitoring Endpoints
-    description: enableMonitoring -- Create the ingress or gateway routes for Prometheus exporters if true.
+    description: Create the ingress or gateway routes for Prometheus exporters if true.
     type: boolean
     default: true
     group: Ingress
   - variable: services.type
     label: Service Type
-    description: services.type -- type of all the externally-facing services. Can be overridden on each service.
+    description: type of all the externally-facing services. Can be overridden on each service.
     type: enum
     default: ClusterIP
     options:
@@ -112,7 +104,7 @@ questions:
     group: Services
   - variable: tftp.enable
     label: Enable TFTP Server
-    description: Deploy the TFTP server to PXE boot systems.
+    description: Define a TFTP server deployment with one replica if set to true
     type: boolean
     default: false
     group: Components
@@ -120,34 +112,31 @@ questions:
     subquestions:
       - variable: tftp.hostNetwork
         label: Use Host Network
-        description: |-
-          tftp.hostNetwork -- Use the host network to bypass the Kubernetes network layers.
-          This may be needed if not using a LoadBalancer for the TFTP server.
-          Note that this may be more complex to manage on multi-node clusters.
+        description: Use the host network to bypass the Kubernetes network layers. This may be needed if not using a LoadBalancer for the TFTP server. Note that this may be more complex to manage on multi-node clusters.
         type: boolean
         default: false
   - variable: hubAPI.enable
     label: Enable Hub XML-RPC API
-    description: hubAPI.enable -- Define a hub API deployment with one replica if set to true.
+    description: Define a hub API deployment with one replica if set to true.
     type: boolean
     default: false
     group: Components
   - variable: saline.enable
     label: Enable Saline
-    description: Deploy Saline to provide Salt master metrics.
+    description: Define a saline deployment with one replica if set to true.
     type: boolean
     default: false
     group: Components
   - variable: coco.replicas
     label: Confidential Computing Attestation Replicas
-    description: Number of replicas for the confidential computing attestation deployment. 0 disables it.
+    description: Number the confidential computing pods replicas
     type: int
     default: 0
     group: Components
     min: 0
   - variable: db.enable
     label: Deploy PostgreSQL
-    description: 'Deploy the internal PostgreSQL instance. WARNING: setting this to false is not supported yet.'
+    description: Deploys the internal dababase if set to true. Setting to false is not supported yet.
     type: boolean
     default: true
     group: Database
@@ -155,7 +144,7 @@ questions:
     subquestions:
       - variable: db.podsCIDR
         label: Pods CIDR
-        description: Network IP range allowed to make plain text connections to the database, usually the cluster pods CIDR. The default matches rke2's pods CIDR; K3s also uses 10.42.0.0/16.
+        description: Network IP range to allow plain text connections from, usually the cluster pods CIDR The default has been adjusted with rke2's pods CIDR default.
         type: string
         default: 10.42.0.0/16
   - variable: volumes.storageClass
@@ -171,13 +160,13 @@ questions:
     group: Storage
   - variable: server.mirror.hostPath
     label: Mirror Host Path
-    description: Path on the node to mount as the server.susemanager.fromdir mirror. Strongly discouraged as it ties the server to a node. Leave empty for none.
+    description: Path on the node to mount as mirror.
     type: string
     default: ""
     group: Storage
   - variable: server.superPrivileged
     label: Super Privileged Server
-    description: May be needed on clusters with SELinux or AppArmor enforced. This is a big security risk.
+    description: Set to true to run on a cluster with selinux or AppArmor enforced.
     type: boolean
     default: false
     group: Advanced
@@ -185,17 +174,17 @@ questions:
     subquestions:
       - variable: server.apparmorProfile
         label: AppArmor Profile
-        description: Name of an AppArmor profile to use for the server pod. It must show up in aa-status output.
+        description: Name of an AppArmor profile to use for the server pod.
         type: string
         default: ""
       - variable: server.selinuxType
         label: SELinux Type
-        description: SELinux type to use for the server pod. Leave empty for the container runtime default.
+        description: Name of the SELinux type to use for the server pod.
         type: string
         default: ""
   - variable: server.systemdLogLevel
     label: Systemd Log Level
-    description: Value passed to the systemd log-level parameter. Empty keeps the default. Setting it adds a tty to the container.
+    description: Systemd log level to use for debugging
     type: enum
     default: ""
     options:
@@ -211,7 +200,7 @@ questions:
     group: Advanced
   - variable: exposeJavaDebug
     label: Expose Java Debug Ports
-    description: exposeJavaDebug -- Expose ports 8001, 8002, and 8003 for Java debugging if true
+    description: Expose ports 8001, 8002, and 8003 for Java debugging if true
     type: boolean
     default: false
     group: Advanced
