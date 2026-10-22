@@ -19,11 +19,11 @@ Releases are [immutable](https://docs.github.com/en/code-security/concepts/suppl
 ```sh
 export VERSION=X.Y.Z
 # the release and its tag are the ones GitHub attested
-gh release verify "v${VERSION}" --repo tashima42/helm-questions
+gh release verify "${VERSION}" --repo tashima42/helm-questions
 
-curl -fsSL "https://github.com/tashima42/helm-questions/releases/download/v${VERSION}/questions-${VERSION}.tgz" -O
+curl -fsSL "https://github.com/tashima42/helm-questions/releases/download/${VERSION}/questions-${VERSION}.tgz" -O
 # the downloaded tarball matches the attested asset
-gh release verify-asset "v${VERSION}" "questions-${VERSION}.tgz" --repo tashima42/helm-questions
+gh release verify-asset "${VERSION}" "questions-${VERSION}.tgz" --repo tashima42/helm-questions
 ```
 
 Both commands fail if the release was modified or the file doesn't match. The release also has a `checksums.txt` file with the SHA256 of the tarball.
@@ -33,7 +33,7 @@ Both commands fail if the release was modified or the file doesn't match. The re
 Requires Helm 4. The tarball has no GPG `.prov` file, so Helm can't verify it itself and `--verify=false` is needed. Verify the release with the GitHub attestation first (see below):
 
 ```sh
-helm plugin install --verify=false "https://github.com/tashima42/helm-questions/releases/download/v${VERSION}/questions-${VERSION}.tgz"
+helm plugin install --verify=false "https://github.com/tashima42/helm-questions/releases/download/${VERSION}/questions-${VERSION}.tgz"
 ```
 
 To build from source (Go required):
@@ -85,5 +85,3 @@ Any other field is copied as is (`required`, `min`, `max`, `show_if`, `show_subq
 make test
 make build-all   # all the platforms in plugin.yaml
 ```
-
-Releases are created by pushing a `vX.Y.Z` tag, the plugin version in `plugin.yaml` is set from it.
