@@ -4,12 +4,12 @@
 
 name: Release
 
-# Pushing a vX.Y.Z tag builds the binaries for all the platforms, packages them as a
+# Pushing a X.Y.Z tag builds the binaries for all the platforms, packages them as a
 # Helm plugin and publishes a GitHub release with the tarball and its checksum.
 
 on:
   push:
-    tags: ["v*"]
+    tags: ["*"]
 
 permissions:
   contents: write
