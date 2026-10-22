@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: SUSE LLC
+#
+# SPDX-License-Identifier: MIT
 #!/bin/sh
 
 COMMIT=$(git rev-parse --short HEAD)

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SUSE LLC
+//
+// SPDX-License-Identifier: MIT
+
 module github.com/tashima42/helm-questions
 
 go 1.27.1

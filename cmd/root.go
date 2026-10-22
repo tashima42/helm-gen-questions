@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: SUSE LLC
+//
+// SPDX-License-Identifier: MIT
+
 // Package cmd
 package cmd
 
